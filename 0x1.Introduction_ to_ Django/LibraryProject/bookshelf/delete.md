@@ -1,6 +1,8 @@
 # This command deletes the book1 from bookshelf database
-from bookshel.models import Book
+
 # command
+from bookshelf.models import Book
+
 book.delete
 
 # Output
