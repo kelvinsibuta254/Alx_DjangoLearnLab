@@ -43,35 +43,35 @@ class CustomLogoutView(LogoutView):
 def is_admin(user):
     return user.is_authenticated and user.userprofile.role == 'Admin'
 
+@user_passes_test(is_admin)
+def admin_view(request):
+    return render(request, template_name='relationship_app/admin_view.html')
+
 def is_librarian(user):
     return user.is_authenticated and user.userprofile.role == 'Librarian'
+
+@user_passes_test(is_librarian)
+def Librarian_view(request):
+    return render(request, template_name='relationship_app/librarian_view.html')
 
 def is_member(user):
     return user.is_authenticated and user.userprofile.role == 'Member'
 
-@user_passes_test(is_admin)
-def admin_view(request):
-    return render(request, 'relationship_app/admin_view.html')
-
-@user_passes_test(is_librarian)
-def librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html')
-
 @user_passes_test(is_member)
-def member_view(request):
-    return render(request, 'relationship_app/member_view.html')
+def Member_view(request):
+    return render(request, template_name='relationship_app/member_view.html')
 
 @login_required
 @user_passes_test(is_admin)
-def admin_view(request):
-    return render(request, 'relationship_app/admin_view.html')
+def Admin_view(request):
+    return render(request, template_name='relationship_app/admin_view.html')
 
 @login_required
 @user_passes_test(is_librarian)
 def Librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html')
+    return render(request, template_name='relationship_app/librarian_view.html')
 
 @login_required
 @user_passes_test(is_member)
-def member_view(request):
-    return render(request, 'relationship_app/member_view.html')
+def Member_view(request):
+    return render(request, template_name='relationship_app/member_view.html')
