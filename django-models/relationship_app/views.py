@@ -17,10 +17,10 @@ def list_books(request):
 
 
 # Class-based View
-class LibraryDetailView(DetailView):
+class LibrarianView(DetailView):
     model = Library
     template_name = 'relationship_app/library_detail.html'
-    context_object_name = 'library'
+    context_object_name = 'Librarian'
 
 
 def register(request):
@@ -47,31 +47,31 @@ def is_admin(user):
 def admin_view(request):
     return render(request, template_name='relationship_app/admin_view.html')
 
-def Librarian(user):
+@login_required
+@user_passes_test(is_admin)
+def Admin_view(request):
+    return render(request, template_name='relationship_app/admin_view.html')
+
+def is_librarian(user):
     return user.is_authenticated and user.userprofile.role=='Librarians'
 
-@user_passes_test(Librarian)
-def Librarianview(request):
+@user_passes_test(is_librarian)
+def Librarian_view(request):
+    return render(request, template_name='relationship_app/librarian_view.html')
+
+@login_required
+@user_passes_test(is_librarian)
+def Librarian_view(request):
     return render(request, template_name='relationship_app/librarian_view.html')
 
 def is_member(user):
     return user.is_authenticated and user.userprofile.role == 'Member'
 
 @user_passes_test(is_member)
-def Memberview(request):
+def Member_view(request):
     return render(request, template_name='relationship_app/member_view.html')
 
 @login_required
-@user_passes_test(is_admin)
-def Adminview(request):
-    return render(request, template_name='relationship_app/admin_view.html')
-
-@login_required
-@user_passes_test(Librarian)
-def Librarianview(request):
-    return render(request, template_name='relationship_app/librarian_view.html')
-
-@login_required
 @user_passes_test(is_member)
-def Memberview(request):
+def Member_view(request):
     return render(request, template_name='relationship_app/member_view.html')
