@@ -26,13 +26,14 @@ Sibuta.books.all()
 Sibuta.objects.get(name=Sibuta)
 
 #Adding a Librarian
-kssibuta = Librarian.objects.create(name="KSSibuta", library=Sibuta)
-kssibuta.save()
+library_name = Librarian.objects.create(name="KSSibuta", library=Sibuta)
+library_name.save()
 
-kssibuta.library
+#library_name.library
 
 #Retrieving a Librarian
 Librarian.objects.get(library= Sibuta)
 
 #Listing all books
+Library.objects.get(name=library_name)
 books = Book.objects.all()
