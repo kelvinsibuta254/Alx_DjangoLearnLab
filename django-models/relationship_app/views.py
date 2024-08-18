@@ -59,6 +59,9 @@ from .models import UserProfile
 def is_admin(user):
     return user.is_authenticated and user.UserProfile.role == "Admin"
 
+def Librarian(user):
+    return user.role == "Librarians"
+
 def is_librarian(user):
     return user.is_authenticated and user.UserProfile.role == "Librarians"
 
