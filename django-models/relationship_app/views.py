@@ -57,13 +57,13 @@ from .models import UserProfile
 
 
 def is_admin(user):
-    return user.is_authenticated and user.userprofile.role == 'Admin'
+    return user.is_authenticated and user.userprofile.role == "Admin"
 
-def is_Librarian(user):
-    return user.is_authenticated and user.userprofile.role == "Librarians"
+def is_librarian(user):
+    return user.is_authenticated and user.userprofile.role == "Librarian"
 
 def is_member(user):
-    return user.is_authenticated and user.userprofile.role == 'Member'
+    return user.is_authenticated and user.userprofile.role == "Member"
 
 
 # Views
@@ -71,7 +71,7 @@ def is_member(user):
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
 
-@user_passes_test(is_Librarian)
+@user_passes_test(is_librarian)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
@@ -84,7 +84,7 @@ def member_view(request):
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 
-@user_passes_test(is_Librarian)
+@user_passes_test(is_librarian)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
