@@ -4,11 +4,14 @@ from .models import Author, Book, Library, Librarian
 Wilson = Author.objects.create(name="Wilson Rawls")
 Wilson.save()
 
+#Querying all books by a specific author
+#Wilson = Author.objects.get(name="Wilson Rawls")
+books = Author.objects.filter(author = Wilson)
 #Adding titles of the Book
 Last = Book.objects.create(title="All the Wrong Questions: When Did you See Her Last?")
 Last.save()
 #Filtering books by author
-book_by_author = Book.objects.get(author=Wilson)
+book_by_author = Author.objects.get(author=Wilson)
 
 #Library
 Sibuta = Library.objects.create(name="Sibuta")
