@@ -1,17 +1,17 @@
 from .models import Author, Book, Library, Librarian
 
 #Creating author field
-author_name = Author.objects.create(name="Wilson Rawls")
-author_name.save()
+author = Author.objects.create(name="Wilson Rawls")
+author.save()
 
 #Querying all books by a specific author
 #Wilson = Author.objects.get(name="Wilson Rawls")
-author = Author.objects.filter(author = author_name)
+author_name = Author.objects.filter(author = author)
 #Adding titles of the Book
 Last = Book.objects.create(title="All the Wrong Questions: When Did you See Her Last?")
 Last.save()
 #Filtering books by author
-book_by_author = Author.objects.get(author=author)
+book_by_author = Author.objects.get(author=author_name)
 
 #Library
 Sibuta = Library.objects.create(name="Sibuta")
