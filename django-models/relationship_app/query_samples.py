@@ -4,12 +4,11 @@ from .models import Author, Book, Library, Librarian
 author_name = Author.objects.create(name="Wilson Rawls")
 author_name.save()
 author = "Wilson Rawls"
+
 #Querying all books by a specific author
-#Wilson = Author.objects.get(name="Wilson Rawls")
 Author.objects.get(name=author_name)
 Author.objects.filter(author=author)
-# Author.objects.get(author=author_name)
-# Author.objects.filter(author=author_name)
+
 #Adding titles of the Book
 Last = Book.objects.create(title="All the Wrong Questions: When Did you See Her Last?")
 Last.save()
@@ -25,7 +24,6 @@ Sibuta.books.add(Last)
 #Listing all books in a Library
 Sibuta.books.all()
 Sibuta.objects.get(name=Sibuta)
-#Library.objects.get(name=library_name)
 
 #Adding a Librarian
 kssibuta = Librarian.objects.create(name="KSSibuta", library=Sibuta)
@@ -33,7 +31,7 @@ kssibuta.save()
 
 #Retrieving a Librarian
 Librarian.objects.get(library= Sibuta)
-kssibuta.library
+# kssibuta.library
 
 #Listing all books
 books = Book.objects.all()
