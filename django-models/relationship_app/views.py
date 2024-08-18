@@ -57,16 +57,16 @@ from .models import UserProfile
 
 
 def is_admin(user):
-    return user.is_authenticated and user.UserProfile.role == "Admin"
+    return user.is_authenticated and user.UserProfile.role=="Admin"
 
 def Librarian(user):
     return user.role == "Librarians"
 
 def is_librarian(user):
-    return user.is_authenticated and user.UserProfile.role == "Librarians"
+    return user.is_authenticated and user.UserProfile.role=="Librarian"
 
 def is_member(user):
-    return user.is_authenticated and user.UserProfile.role == "Member"
+    return user.is_authenticated and user.UserProfile.role=="Member"
 
 
 # Views
