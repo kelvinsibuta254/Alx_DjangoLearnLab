@@ -18,7 +18,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('books/', views.list_books, name='books'),
     path('library/<int:pk>/', views.LibraryDetailView.as_view(), name='library_detail'),
-    path('add_book', views.can_add_book),
+    path('add_book/', views.can_add_book),
     path('edit_book/', views.can_change_book),
     path('delete_book', views.can_delete_book),
 ]
