@@ -67,7 +67,7 @@ def Admin_view(request):
     return render(request, template_name='relationship_app/admin_view.html')
 
 @login_required
-@user_passes_test(is_librarian)
+@user_passes_test(LibrarianView)
 def Librarian_view(request):
     return render(request, template_name='relationship_app/librarian_view.html')
 
