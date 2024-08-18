@@ -8,9 +8,9 @@ from .views import register
 
 
 urlpatterns = [
-    path('admin/', admin_view, name='admin'),
-    path('librarian/', librarian_view, name='librarian'),
-    path('member/', member_view, name='member'),
+    path('admin/', admin_view, name='Admin'),
+    path('librarian/', librarian_view, name='Librarian'),
+    path('member/', member_view, name='Member'),
     path('login/', LoginView.as_view(template_name='relationship_app/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='relationship_app/logout.html'), name='logout'),
     # path('logout/', LogoutView.as_view(template_name='relationship_app/simple_logout.html'), name='logout'),
