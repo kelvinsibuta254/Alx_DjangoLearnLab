@@ -29,9 +29,10 @@ Sibuta.objects.get(name=Sibuta)
 kssibuta = Librarian.objects.create(name="KSSibuta", library=Sibuta)
 kssibuta.save()
 
+kssibuta.library
+
 #Retrieving a Librarian
 Librarian.objects.get(library= Sibuta)
-# kssibuta.library
 
 #Listing all books
 books = Book.objects.all()
