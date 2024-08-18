@@ -29,8 +29,6 @@ Sibuta.objects.get(name=Sibuta)
 library_name = Librarian.objects.create(name="KSSibuta", library=Sibuta)
 library_name.save()
 
-#library_name.library
-
 #Retrieving a Librarian
 Librarian.objects.get(library= Sibuta)
 
