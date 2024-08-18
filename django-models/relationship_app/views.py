@@ -59,7 +59,7 @@ from .models import UserProfile
 def is_admin(user):
     return user.is_authenticated and user.userprofile.role == 'Admin'
 
-def is_librarian(user):
+def is_Librarian(user):
     return user.is_authenticated and user.userprofile.role == "Librarians"
 
 def is_member(user):
