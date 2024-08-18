@@ -8,8 +8,8 @@ author = "Wilson Rawls"
 #Wilson = Author.objects.get(name="Wilson Rawls")
 Author.objects.get(name=author_name)
 Author.objects.filter(author=author)
-Author.objects.get(author=author_name)
-Author.objects.filter(author=author_name)
+# Author.objects.get(author=author_name)
+# Author.objects.filter(author=author_name)
 #Adding titles of the Book
 Last = Book.objects.create(title="All the Wrong Questions: When Did you See Her Last?")
 Last.save()
