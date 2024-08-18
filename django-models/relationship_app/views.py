@@ -5,6 +5,10 @@ from .models import Library
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.decorators import user_passes_test
+from .models import UserProfile
+
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 # Function-based View
 def list_books(request):
@@ -34,10 +38,6 @@ def register(request):
 class CustomLogoutView(LogoutView):
     def get(self, request, *args, **kwargs):
         return self.post(request, *args, **kwargs)
-    
-
-from django.contrib.auth.decorators import user_passes_test
-from .models import UserProfile
 
 
 def is_admin(user):
@@ -61,9 +61,6 @@ def librarian_view(request):
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')
 
-
-from django.contrib.auth.decorators import login_required, user_passes_test
-
 @login_required
 @user_passes_test(is_admin)
 def admin_view(request):
@@ -71,7 +68,7 @@ def admin_view(request):
 
 @login_required
 @user_passes_test(is_librarian)
-def librarian_view(request):
+def Librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
 @login_required
