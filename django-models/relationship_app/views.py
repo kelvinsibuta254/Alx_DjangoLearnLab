@@ -48,30 +48,30 @@ def admin_view(request):
     return render(request, template_name='relationship_app/admin_view.html')
 
 def Librarian(user):
-    return user.is_authenticated and user.userprofile.role == 'Librarians'
+    return user.is_authenticated and user.userprofile.role=='Librarians'
 
 @user_passes_test(Librarian)
-def Librarian_view(request):
+def Librarianview(request):
     return render(request, template_name='relationship_app/librarian_view.html')
 
 def is_member(user):
     return user.is_authenticated and user.userprofile.role == 'Member'
 
 @user_passes_test(is_member)
-def Member_view(request):
+def Memberview(request):
     return render(request, template_name='relationship_app/member_view.html')
 
 @login_required
 @user_passes_test(is_admin)
-def Admin_view(request):
+def Adminview(request):
     return render(request, template_name='relationship_app/admin_view.html')
 
 @login_required
 @user_passes_test(Librarian)
-def Librarian_view(request):
+def Librarianview(request):
     return render(request, template_name='relationship_app/librarian_view.html')
 
 @login_required
 @user_passes_test(is_member)
-def Member_view(request):
+def Memberview(request):
     return render(request, template_name='relationship_app/member_view.html')
