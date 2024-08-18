@@ -21,6 +21,9 @@ def list_books(request):
     books = Book.objects.all()
     return render(request, 'relationship_app/list_books.html', {'books': books})
 
+
+
+
 from django.contrib.auth.decorators import user_passes_test
 from django.shortcuts import render
 
@@ -29,7 +32,7 @@ def is_admin(user):
     return user.userprofile.role == 'Admin'
 
 def is_librarian(user):
-    return user.userprofile.role == 'Librarian'
+    return user.is_authenticated and user.userprofile.role == 'Librarian'
 
 def Librarian(user):
     return user.authenticated.roles == 'Librarians'
