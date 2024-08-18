@@ -6,7 +6,8 @@ Wilson.save()
 
 #Querying all books by a specific author
 #Wilson = Author.objects.get(name="Wilson Rawls")
-author_name = Author.objects.filter(author = Wilson)
+Author.objects.filter(author = Wilson)
+Author.objects.filter(author=Wilson)
 #Adding titles of the Book
 Last = Book.objects.create(title="All the Wrong Questions: When Did you See Her Last?")
 Last.save()
