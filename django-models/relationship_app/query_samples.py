@@ -1,4 +1,9 @@
-from .models import Book
+from .models import Book, Library
 
 #Filtering books by author
 book_by_author = Book.objects.filter(author="George Orwel")
+
+Library.objects.get(name = "name")
+
+#Listing all books
+books = Book.objects.all()
