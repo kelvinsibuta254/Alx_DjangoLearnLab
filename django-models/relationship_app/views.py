@@ -55,13 +55,9 @@ def Admin(request):
 def Librarian(user):
     return user.is_authenticated and user.role == "Librarians"
 
-# @user_passes_test(Librarian)
-# def librarian_view(request):
-#     return render(request, template_name='relationship_app/librarian_view.html')
-
 @user_passes_test(Librarian)
 def librarian_view(request):
-    return render(request, 'relationship_app/librarian_view.html')
+    return render(request, template_name='templates/relationship_app/librarian_view.html')
 
 @login_required
 @user_passes_test(Librarian)
