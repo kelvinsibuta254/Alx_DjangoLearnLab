@@ -63,7 +63,7 @@ def Librarian(user):
     return user.role == "Librarians"
 
 def is_librarian(user):
-    return user.is_authenticated and user.userprofile.role==" Librarian "
+    return user.is_authenticated and user.userprofile.role=="Librarian"
 
 def is_member(user):
     return user.is_authenticated and user.UserProfile.role=="Member"
