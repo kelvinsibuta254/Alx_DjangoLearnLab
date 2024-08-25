@@ -21,7 +21,7 @@ class Book(models.Model):
 #override username field
 #create a user manager
 #register the user model with django admin
-class CustomUserAdmin(BaseUserManager):
+class CustomUserManager(BaseUserManager):
     def create_user(self, email, password):
         #validated the email
         if not email:
@@ -52,4 +52,4 @@ class CustomUser(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    objects = CustomUserAdmin()
+    objects = CustomUserManager()
