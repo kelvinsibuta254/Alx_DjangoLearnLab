@@ -14,7 +14,7 @@ class CustomUserCreationForm(UserCreationForm):
             "email", "age", "role"
         )
 
-class PostForm(forms.ModelForm):
+class ExampleForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["title", "content"]
