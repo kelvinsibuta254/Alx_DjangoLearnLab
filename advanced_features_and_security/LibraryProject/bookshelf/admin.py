@@ -13,5 +13,6 @@ class ModelAdmin(CustomUserAdmin):
     list_display = ("email", "is_staff")
     
 
-admin.site.register(CustomUser, CustomUserManager, ModelAdmin)
+admin.site.register(CustomUser, CustomUserManager)
+admin.site.register(ModelAdmin)
 
