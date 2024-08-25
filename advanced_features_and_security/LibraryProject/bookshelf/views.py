@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from .models import Post
-from .forms import CustomUserCreationForm, PostForm
+from .forms import CustomUserCreationForm, ExampleForm
 # Create your views here.
 
 def index(request):
@@ -40,26 +40,26 @@ def list_posts(request):
 @permission_required("blog.create", raise_exception=True)
 def create_post(request):
     if request.method == "POST":
-        form = PostForm(request.POST)
+        form = ExampleForm(request.POST)
         if form.is_valid():
             posts = form.save(commit=False)
             posts.author = request.user
             posts.save()
             return redirect("list_posts")
     else:
-        form = PostForm()
+        form = ExampleForm()
         return render(request, "blog/create_post.html", {"form": form})
 @login_required
 @permission_required("blog.edit", raise_exception=True)
 def edit_post(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = ExampleForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
             return redirect("list_posts")
     else:
-        form = PostForm(instance=post)
+        form = ExampleForm(instance=post)
     return render(request, "blog/edit_post.html", {"form": form})
 
 @login_required
