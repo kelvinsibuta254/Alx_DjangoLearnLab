@@ -44,6 +44,8 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractUser):
+    date_of_birth = models.DateField()
+    profile_photo = models.ImageField()
     email = models.EmailField(unique=True, max_length=255, verbose_name="Email Address")
     username = models.CharField(unique=False, max_length=10)
 

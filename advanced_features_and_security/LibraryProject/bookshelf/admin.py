@@ -9,9 +9,9 @@ class BookAdmin(admin.ModelAdmin):
 #Register your models here.
 admin.site.register(Book, BookAdmin)
 
-class UserAdmin(CustomUserAdmin):
+class ModelAdmin(CustomUserAdmin):
     list_display = ("email", "is_staff")
     
 
-admin.site.register(User, UserAdmin)
+admin.site.register(User, ModelAdmin)
 
