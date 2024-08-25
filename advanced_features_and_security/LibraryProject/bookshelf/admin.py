@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Book, User
+from .models import Book, CustomUser, CustomUserManager
 from django.contrib.auth.admin import UserAdmin as CustomUserAdmin
 
 class BookAdmin(admin.ModelAdmin):
@@ -13,5 +13,5 @@ class ModelAdmin(CustomUserAdmin):
     list_display = ("email", "is_staff")
     
 
-admin.site.register(User, ModelAdmin)
+admin.site.register(CustomUser, CustomUserManager, ModelAdmin)
 
