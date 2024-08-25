@@ -37,8 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'relationship_app.apps.RelationshipAppConfig',
     'bookshelf.apps.BookshelfConfig',
-    'relationship_app.apps.RelationshipAppConfig'
 ]
 
 MIDDLEWARE = [
@@ -77,10 +77,10 @@ WSGI_APPLICATION = 'LibraryProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bookshelf',
-        "USER": "",
-        "PASSWORD": "",
+        "ENGINE": "django.db.backends.mysql",
+        "NAME": "bookshelf",
+        "USER": "root",
+        "PASSWORD": "byg6zmXp@#$%",
         "HOST": "127.0.0.1",
         "PORT": "3306",
     }
@@ -127,3 +127,5 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'bookshelf.User'
