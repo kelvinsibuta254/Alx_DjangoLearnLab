@@ -53,10 +53,10 @@ def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')  
 
 #Check for Librarian
-def check_librarian(user):
-    return user.userprofile.role =='Librarian'
+def Librarian(user):
+    return user.userprofile.role =='Librarians'
 
-@user_passes_test(check_librarian)
+@user_passes_test(Librarian)
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
