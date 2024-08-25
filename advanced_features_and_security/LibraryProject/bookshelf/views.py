@@ -7,7 +7,9 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth import login
 from django.contrib.auth.models import Group
 from .models import Post
-from .forms import CustomUserCreationForm, ExampleForm
+from .forms import ExampleForm
+
+from .forms import CustomUserCreationForm
 # Create your views here.
 
 def index(request):
