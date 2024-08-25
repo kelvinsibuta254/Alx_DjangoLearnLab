@@ -130,14 +130,19 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'bookshelf.CustomUser'
 
+#Ensure CSRF cookies are only transmitted over HTTPS
 CSRF_COOKIE_SECURE = True
 
+#Ensure cookies are only transmitted over HTTPS
 SESSION_COOKIE_SECURE = True
 
+#Enable the browser's XSS filtering and help prevent cross-site scripting attacks
 SECURE_BROWSER_XSS_FILTER = True
 
+#Prevents your site from being framed and protect against clickjacking
 X_FRAME_OPTIONS = "DENY"
 
+#Prevent browsers from MIME-sniffing a response away from the declared content-type
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
 # for more security
@@ -147,11 +152,13 @@ CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_SAMESITE = 'Strict'
 
-## that requests over HTTP are redirected to HTTPS. aslo can config in webserver
+## Redirect all HTTP to HTTPS
 SECURE_SSL_REDIRECT = True 
 
-## Strict-Transport-Security
-SECURE_HSTS_SECONDS = 15768000
+## Instruct browsers to only access the site via HTTPS for the specified time
+SECURE_HSTS_SECONDS = 31536000
+
+# Include all subdomains in the HSTS policy and to allow preloading
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 SECURE_HSTS_PRELOAD = True
 
