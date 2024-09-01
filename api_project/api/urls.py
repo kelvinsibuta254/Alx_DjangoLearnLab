@@ -8,5 +8,5 @@ urlpatterns = [
     ]
 
 router = DefaultRouter()
-router.register('api/', BookViewSet, basename='api')
+router.register('api/', include('api.urls'), BookViewSet, basename='api')
 urlpatterns = router.urls
