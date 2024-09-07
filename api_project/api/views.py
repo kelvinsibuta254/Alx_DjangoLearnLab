@@ -103,3 +103,97 @@ class BookCreateView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+from rest_framework, import mixins, generics
+# Mixin - reusable optional actions
+# Actions- list, retrieve, update, create
+# mixins don't have .get() and .post methods
+class BookUserCreateView(mixins.CreateModelMixin, generics.GenericAPIView):
+    pass
+
+
+# This code was added today
+
+from django.shortcuts import render
+from rest_framework import generics, mixins
+from .models import GeneBank
+from rest_framework import viewsets
+from .serializers import GeneBankSerializer
+from rest_framework.permissions import IsAdminUser
+
+# Create your views here.
+
+class CustomBookCreateView(generics.CreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+# Overrides the view and set several classes
+class BookList(generics.ListCreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    permission_classes = [IsAdminUser]
+
+    def list(self, request):
+        # Note the use of 'get_queryset()' instead of 'self.queryset'
+        queryset = self.get_queryset()
+        serializer = BookSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+class BookCreateView(mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+class BookListView(mixins.ListModelMixin, generics.GenericAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+# Used for get requests
+    def get(self, request, *args, **kwargs): # args pass positional arguments to the view
+        return self.list(request, *args, **kwargs)
+
+class BookRetrieveView(mixins.RetrieveModelMixin, generics.GenericAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+class CustomBookListView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class MyView(LoginRequiredMixin):
+    """Makes sure that people must login to access this view"""
+    login_url = '/login/' # define a url someone is going to be redirected to when they are not logged in
+    redirect_field_name = 'redirect_to'
+    
+    def get(self, request):
+        """This is a get request for one item or list of items"""
+        pass
+
+
+from .mixins import MultipleFieldLookupMixin, AllowPUTAsCreateMixin
+
+class RetrieveBookView(MultipleFieldLookupMixin, generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class =  BookSerializer
+    lookup_fields = '__all__'
+
+class BaseRetrieveView(MultipleFieldLookupMixin, generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_fields = '__all__'
+
+class BaseRetrieveUpdateDestroyView(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_fields = ['title', 'author']

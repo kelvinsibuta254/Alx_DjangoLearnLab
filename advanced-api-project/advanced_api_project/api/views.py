@@ -6,6 +6,8 @@ from rest_framework.routers import DefaultRouter
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import Book, BookSerializer, Author, AuthorSerializer
+from rest_framework import generics
+from .models import Book
 
 @api_view(['GET'])
 def hello_world(request):
@@ -47,3 +49,40 @@ class BookViewset(viewsets.ViewSet):
         instance.content = validated_data.get("content")
         instance.created = validated_data.get("created")
         return instance
+    
+class CustomBookCreateView(generics.CreateAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+class CustomBookListView(generics.ListAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+
+# Custom Views with Mixinx
+
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class MyView(LoginRequiredMixin):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        pass
+
+
+from .mixins import MultipleFieldLookupMixin
+
+class RetrieveBookView(MultipleFieldLookupMixin, generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_fields = ['title', 'publication_year']
+
+class BaseRetrieveView(MultipleFieldLookupMixin, generics.RetrieveAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_fields = ['title', 'publication_year']
+
+class BaseRetrieveUpdateDestroyView(MultipleFieldLookupMixin, generics.RetrieveUpdateDestroyAPIView):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
+    lookup_fields = ['title', 'publication_year']
