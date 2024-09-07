@@ -22,32 +22,31 @@ class BookListView(ListView):
 
 class BookDetailView(DetailView):
     model = Book
-    template_name = 'bookshelf/book_detail.html'  # Template for displaying a single book
+    template_name = 'bookshelf/book_detail.html'  # Displays a single book
     context_object_name = 'book'
     permission_classes = [IsAuthenticatedOrReadOnly]
     
 class BookCreateView(CreateView):
     model = Book
-    fields = ['title', 'author', 'publication_year']  # Fields to show in the form
-    template_name = 'bookshelf/book_form.html'  # Template for creating a book
+    fields = ['title', 'author', 'publication_year']
+    template_name = 'bookshelf/book_form.html' 
     success_url = reverse_lazy('book-list')
     permission_classes = [IsAuthenticated]
     
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ['title', 'author', 'publication_year']  # Fields to edit
-    template_name = 'bookshelf/book_form.html'  # Template for updating a book
+    fields = ['title', 'author', 'publication_year']
+    template_name = 'bookshelf/book_form.html'
     success_url = reverse_lazy('book-list') 
     permission_classes = [IsAuthenticated]
       
 class BookDeleteView(DeleteView):
     model = Book
-    template_name = 'bookshelf/book_confirm_delete.html'  # Template for confirming deletion
+    template_name = 'bookshelf/book_confirm_delete.html' 
     success_url = reverse_lazy('book-list') 
     permission_classes = [IsAuthenticated]         
-# Create your views here.
 
-# Enable filtering, searching, and ordering
+# Filtering, searching, and ordering
     # filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     # filter_backends = [filters.OrderingFilter]
     # filter_backends = [filters.SearchFilter]
@@ -55,14 +54,11 @@ class BookDeleteView(DeleteView):
 
     # Filter by title, author, and. publication_year
 
-    # Enable search functionality
+    # searching
     search_fields = ['title', 'author']
 
-    # Enable ordering functionality
+    # ordering
     ordering_fields = ['title', 'publication_year']
-    ordering = ['title']  # Default ordering by title
+    ordering = ['title']  # ordering by title
 
-# api/views.py
-
-# api/views.py
 
