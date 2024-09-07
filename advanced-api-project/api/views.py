@@ -47,9 +47,10 @@ class BookDeleteView(DeleteView):
     permission_classes = [IsAuthenticated]         
 
 # Filtering, searching, and ordering
-    # filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
     # filter_backends = [filters.OrderingFilter]
     # filter_backends = [filters.SearchFilter]
+    # filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+
     
 
     # Filter by title, author, and. publication_year
