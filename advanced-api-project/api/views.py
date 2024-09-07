@@ -7,7 +7,7 @@ from django.views.generic import UpdateView
 from django.views.generic import DeleteView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 #from django.contrib.filters import django_filters
-from django_filters.rest_framework import DjangoFilterBackend
+#from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django.urls import reverse_lazy
 from .models import Book
@@ -48,9 +48,9 @@ class BookDeleteView(DeleteView):
 # Create your views here.
 
 # Enable filtering, searching, and ordering
-    filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filter_backends = [filters.OrderingFilter]
-    filter_backends = [filters.SearchFilter]
+    # filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
+    # filter_backends = [filters.OrderingFilter]
+    # filter_backends = [filters.SearchFilter]
     
 
     # Filter by title, author, and. publication_year
