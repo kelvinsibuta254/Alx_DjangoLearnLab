@@ -6,11 +6,12 @@ from django.views.generic import CreateView
 from django.views.generic import UpdateView
 from django.views.generic import DeleteView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
+#from django.contrib.filters import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
 from django.urls import reverse_lazy
 from .models import Book
-from django_filters import rest_framework
+#from django_filters import rest_framework
 from rest_framework import generics
 
 class BookListView(ListView):
