@@ -1,15 +1,52 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Profile</title>
+</head>
+<body>
 
-{% block content %}
-<h1>My Profile</h1>
+    <!-- Header -->
+    <header>
+        <h1>Blog Profile</h1>
+    </header>
 
-<p>Username: {{ user.username }}</p>
-<p>Email: {{ user.email }}</p>
+    <!-- Profile Section -->
+    <section id="profile">
+        <h2>Profile</h2>
+        <img src="profile-picture.jpg" alt="Profile Picture" width="150" height="150">
+        <h3>McDonald Ugochukwu</h3>
+        <p>Backend Developer and SaaS Enthusiast. Passionate about cybersecurity and payment solutions.</p>
+    </section>
 
-{% if user.profile.bio %}
-    <p>Bio:</p>
-    <p>{{ user.profile.bio }}</p>
-{% endif %}
+    <!-- Recent Posts Section -->
+    <section id="recent-posts">
+        <h2>Recent Posts</h2>
+        <ul>
+            <li>
+                <h3><a href="#">Post Title 1</a></h3>
+                <p>Posted on September 10, 2024</p>
+                <p>Brief description of the post goes here...</p>
+            </li>
+            <li>
+                <h3><a href="#">Post Title 2</a></h3>
+                <p>Posted on September 5, 2024</p>
+                <p>Brief description of the post goes here...</p>
+            </li>
+            <li>
+                <h3><a href="#">Post Title 3</a></h3>
+                <p>Posted on August 28, 2024</p>
+                <p>Brief description of the post goes here...</p>
+            </li>
+        </ul>
+    </section>
 
-<a href="{% url 'edit_profile' %}">Edit Profile</a>
-{% endblock content %}
+    <!-- Footer -->
+    <footer>
+        <p>© 2024 Kelvin Sibuta. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

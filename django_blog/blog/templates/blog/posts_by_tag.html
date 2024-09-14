@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Posts Tagged "{{ tag.name }}"</title>
+</head>
+<body>
+    <h1>Posts Tagged "{{ tag.name }}"</h1>
+
+    <!-- Display Posts Associated with the Tag -->
+    <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a> - {{ post.author }}
+                <p>{{ post.content|slice:":200" }}...</p> <!-- Show first 200 characters -->
+            </li>
+        {% empty %}
+            <li>No posts found for this tag.</li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'post_list' %}">Back to All Posts</a>
+</body>
+</html>
