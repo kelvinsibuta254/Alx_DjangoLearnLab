@@ -1,26 +1,65 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm as DefaultForm
+from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import DeleteView, UpdateView
+from .models import Post
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .forms import ProfileUpdateForm, PostForm
+
+
 
 # Create your views here.
 def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = DefaultForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect("login")
     else:
-        form = UserCreationForm()
+        form = DefaultForm()
         return render(request, "register.html", {"form": form})
     
-class LoginView(LoginView):
-    template_name = "login.html"
+@login_required
+def profile(request):
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Your profile has been updated!')
+            return redirect('profile')
+    else:
+        form = ProfileUpdateForm(instance=request.user)
+    return render(request, 'blog/profile.html', {'form': form})
 
-def product(request):
-    return render(request, "product.html")
 
-def index(request):
-    return render(request, "index.html")
+class List_view(ListView):
+    model = Post
+    template_name = 'blog/list_view.html'
+    
+    
+class Detail_View(DetailView):
+    model = Post
+    template_name = 'blog/detail_view.html'
+    
+class create_view(CreateView, LoginRequiredMixin):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/create_view.html'
+     
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form) 
+class Delete_view(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
+    model = Post
+    form_class = PostForm
+    template_name = 'blog/delete_view.html'    
+
+class Update_View(UpdateView, UserPassesTestMixin, LoginRequiredMixin):
+    model = Post
+    form_class = PostForm
+    template_name = "blog/create_view.html"
