@@ -21,9 +21,9 @@ def register(request):
     return render(request, 'blog/register.html', context)
 
 def customlogin(request):
-    if not request.user.is_authenticated():
-        print("User not authenticated. Redirecting User to login page")
-        return redirect('blog/base')
+    # if not request.user.is_authenticated():
+    #     print("User is authenticated. Redirecting User to login page")
+    #     return redirect('blog/base')
      
     if request.method == "POST":
         form = AuthenticationForm(request.POST)

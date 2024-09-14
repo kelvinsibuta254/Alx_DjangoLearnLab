@@ -1,6 +1,6 @@
 # from django.urls import path
 # from .views import register, profile #, index, 
-# from django.contrib.auth.views import LoginView, LogoutView
+
 
 # urlpatterns = [
 #     #path("", index, name="index"),
@@ -16,6 +16,7 @@
 # ]
 
 from django.urls import path
+from django.contrib.auth.views import LoginView, LogoutView
 from . import views
 
 urlpatterns=[
@@ -24,7 +25,7 @@ urlpatterns=[
     path('posts/', views.posts.as_view(), name='posts'),
     path('profile/', views.profile, name='profile'),
     path('login/', views.customlogin, name='login'),
-    path('logout/', views.customlogout, name='logout'),
+    path('logout/', LogoutView.as_view(next_page="/"), name='logout'),
     path('post/new/', views.postcreate.as_view(), name='create-view'),
     path('posts/<int:pk>/',views.postdetail.as_view(), name='detail-view'),
     path('post/<int:pk>/update/', views.postupdate.as_view(), name='update-view'),
