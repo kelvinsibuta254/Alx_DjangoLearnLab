@@ -8,6 +8,6 @@ urlpatterns = [
     path('profile', ProfileUpdateView.as_view()),
     path('logout/', LogoutView.as_view()),
     path('follow/<int:user_id>/', FollowUserView.as_view()),
-    path('unfollow/<int:user_id>/', UnfollowUserView.as_view())
+    path('unfollow/<int:user_id>/', UnfollowUserView.as_view()),
 
 ]
