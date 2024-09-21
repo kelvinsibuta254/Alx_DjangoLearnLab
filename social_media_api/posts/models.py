@@ -1,10 +1,10 @@
 from django.db import models
 from django.conf import settings
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 import datetime
 # Create your models here.
 class Post(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, max_length=100, on_delete=models.CASCADE, related_name='authors')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, max_length=100, on_delete=models.CASCADE, related_name='author')
     title = models.CharField(max_length=50)
     content= models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)

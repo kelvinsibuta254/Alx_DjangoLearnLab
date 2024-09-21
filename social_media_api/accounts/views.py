@@ -20,7 +20,7 @@ class UserRegisterView(APIView):
             response = {
                 'success': True,
                 'user': serializer.data,
-                'token': Token.objects.get(user=User.objects.get(username=serializer.data['username'])).key()
+                'token': Token.objects.get(user=CustomUser.objects.get(username=serializer.data['username'])).key()
             }
 
             return Response(response, status=status.HTTP_200_OK)
@@ -32,9 +32,9 @@ class LoginView(APIView):
         serializer = UserLoginSerializer(data=request.data)
         if serializer.is_valid():
             response = {'username': {'detail': 'User does not exist!', }, }
-            userdata = User.objects.filter(username=request.data['username'])
+            userdata = CustomUser.objects.filter(username=request.data['username'])
             if userdata.exists():
-                user = User.objects.get(username=request.data['username'])
+                user = CustomUser.objects.get(username=request.data['username'])
                 token, created = Token.objects.get_or_create(user=user)
                 response = {
                     'success': True,
@@ -73,7 +73,7 @@ class FollowUserView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         user = self.request.user
-        user_to_follow = get_object_or_404(User, id=self.kwargs['user_id'])
+        user_to_follow = get_object_or_404(CustomUser, id=self.kwargs['user_id'])
         if not user.following.filter(id=user_to_follow.id).exist():
             user.following.add(user_to_follow)
             return Response({'message': 'Followed'}, status=status.HTTP_200_OK)
@@ -87,7 +87,7 @@ class UnfollowUserView(generics.GenericAPIView):
 
     def post(self, request, *args, **kwargs):
         user=self.request.user
-        user_to_unfollow = get_object_or_404(User, id=self.kwargs['user_id'])
+        user_to_unfollow = get_object_or_404(CustomUser, id=self.kwargs['user_id'])
         if user.following.filter(id=user_to_unfollow.id).exists():
             user.following.remove(user_to_unfollow)
             return Response({'message': 'Unfollowed successfully'}, status=status.HTTP_200_OK)

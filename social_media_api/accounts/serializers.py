@@ -1,13 +1,13 @@
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
-from .models import User, Post
+from .models import CustomUser, Post
 from django.conf import settings
 
 # User = settings.get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = User
+        model = CustomUser
         fields = '__all__'
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
@@ -16,7 +16,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
     class Meta:
-        model = User
+        model = CustomUser
         fields = '__all__'
         extra_kwargs = {'passwod': {'write_only': True}}
 
@@ -33,5 +33,5 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ['username', 'password']
