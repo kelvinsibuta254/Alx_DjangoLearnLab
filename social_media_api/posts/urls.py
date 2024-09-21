@@ -15,8 +15,6 @@ urlpatterns = [
     path('comment/<int:pk>/update/', UpdateComment.as_view()),
     path('comment/<int:pk>/delete', DeleteComment.as_view()),
     path('feed/', PostFeed.as_view()),
-    path('posts/<int:post_id>/like/', LikeView.as_view()),
-    path('posts/<int:post_id>/unlike/', UnlikeView.as_view()),
     path('posts/<int:pk>/like/', LikeView.as_view()),
     path('posts/<int:pk>/unlike/', UnlikeView.as_view()),
 ]
