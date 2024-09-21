@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from rest_framework import viewsets, generics, mixins
-from .models import User
+from .models import CustomUser
+from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
 from rest_framework.views import APIView
 from rest_framework.generics import UpdateAPIView
 from rest_framework.response import Response
+from rest_framework import permissions
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from .serializers import UserSerializer, UserRegistrationSerializer, UserLoginSerializer
@@ -56,10 +58,38 @@ class LogoutView(APIView):
 
 class ProfileUpdateView(UpdateAPIView):
     permission_classes = [IsAuthenticated]
-    queryset = User.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
 
     def perform_update(self, serializer):
         serializer.save()
-#     serializer_class = UserSerializer
-#     queryset = User.objects.all()
+
+
+User = get_user_model()
+
+class FollowUserView(generics.GenericAPIView):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user = self.request.user
+        user_to_follow = get_object_or_404(User, id=self.kwargs['user_id'])
+        if not user.following.filter(id=user_to_follow.id).exist():
+            user.following.add(user_to_follow)
+            return Response({'message': 'Followed'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'You already followed this user'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UnfollowUserView(generics.GenericAPIView):
+
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        user=self.request.user
+        user_to_unfollow = get_object_or_404(User, id=self.kwargs['user_id'])
+        if user.following.filter(id=user_to_unfollow.id).exists():
+            user.following.remove(user_to_unfollow)
+            return Response({'message': 'Unfollowed successfully'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'message': 'You nolonger follow this user!'}, status=status.HTTP_400_BAD_REQUEST)

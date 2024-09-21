@@ -20,7 +20,7 @@ class UserManager(BaseUserManager):
         user.save(using= self._db)
         return user
 
-class User(AbstractUser):
+class CustomUser(AbstractUser):
     email = models.EmailField(unique=True, max_length=255)
     username = models.CharField(unique=True, max_length=10)
     bio = models.TextField(max_length=100)
@@ -38,7 +38,7 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
     published_date = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 # class User(AbstractUser):
 #     bio = models.TextField(max_length=100)
 #     profile_picture = models.URLField()
