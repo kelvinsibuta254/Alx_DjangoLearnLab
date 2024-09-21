@@ -3,6 +3,7 @@ from rest_framework import filters, generics, viewsets
 from .serializers import CommentSerializer, PostSerializer
 from django.conf import settings
 from .models import Post, Comment
+from rest_framework import permissions
 from django.shortcuts import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
@@ -34,11 +35,11 @@ class DeletePost(generics.RetrieveDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
 class PostFeed(generics.GenericAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
         following_users = self.request.user.following.all()
-        posts = Post.objects.filter(author_in=following_users).order_by('created_at')
+        posts = Post.objects.filter(author__in=following_users).order_by('created_at')
         serializer=PostSerializer(posts, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
