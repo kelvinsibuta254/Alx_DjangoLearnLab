@@ -1,6 +1,6 @@
 from rest_framework import routers
 from django.urls import path, include
-from .views import CreatePost, ListPost, UpdatePost, DeletePost, PostFeed, CreateComment, ListComment, UpdateComment, DeleteComment
+from .views import CreatePost, ListPost, UpdatePost, DeletePost, PostFeed, CreateComment, ListComment, UpdateComment, DeleteComment, LikeView, UnlikeView
 
 
 router = routers.DefaultRouter()
@@ -15,4 +15,6 @@ urlpatterns = [
     path('comment/<int:pk>/update/', UpdateComment.as_view()),
     path('comment/<int:pk>/delete', DeleteComment.as_view()),
     path('feed/', PostFeed.as_view()),
+    path('posts/<int:post_id>/like/', LikeView.as_view()),
+    path('posts/<int:post_id>/unlike/', UnlikeView.as_view()),
 ]

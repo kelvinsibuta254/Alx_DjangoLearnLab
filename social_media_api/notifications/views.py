@@ -1,15 +1,15 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
+from rest_framework import generics
+from .serializers import NotificationSerializer
+from rest_framework.permissions import IsAuthenticated
 from .models import Notification
 
-@login_required
-def notifications_list(request):
-    notifications = request.user.notifications.filter(read=False)
-    return render(request, 'notifications/list.html', {'notifications': notifications})
+class NotificationListView(generics.ListAPIView):
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
 
-@login_required
-def mark_as_read(request, pk):
-    notification = Notification.objects.get(id=pk)
-    notification.read = True
-    notification.save()
-    return JsonResponse({'message': 'Notification marked as read.'})
+    def get_queryset(self):
+        user = self.request.user
+        unread = Notification.objects.filter(recipient=user, is_read=False)
+        read = Notification.objects.filter(recipient=user, is_read=True)
+        return unread | read

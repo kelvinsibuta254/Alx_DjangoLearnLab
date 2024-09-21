@@ -4,6 +4,7 @@ from .serializers import CommentSerializer, PostSerializer
 from django.conf import settings
 from .models import Post, Comment
 from rest_framework import permissions
+from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
@@ -66,3 +67,43 @@ class DeleteComment(generics.RetrieveDestroyAPIView):
     serializer_class = CommentSerializer
     queryset = Comment.objects.all()
     permission_classes = [IsAuthenticated]
+
+class LikeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+        
+        if Like.objects.filter(user=user, post=post).exists():
+            return Response({'message': 'You have already liked this post'}, status = status.HTTP_400_BAD_REQUEST)
+
+        Like.objects.create(user=user, post=post)
+
+        if post.author != user:
+            Notification.objects.create(
+                recipient = post.author,
+                actor = user,
+                verb = 'liked',
+                target = post
+            )
+
+            return Response({'message':'Congratulatios! Kelvin liked your post'}, status=status.HTTP_200_OK)
+
+
+class UnlikeView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, post_id):
+        post = get_object_or_404(Post, id=post_id)
+        user = request.user
+
+        like = Like.objects.filter(user=user, post=post).first()
+        if like:
+            like.delete()
+            return Response({'message': 'Unliked'}, status=status.HTTP_200_OK)
+        return Response({'message': 'You have not liked this post yet!!'}, status=status.HTTP_400_BAD_REQUEST)  
+
+
+        
+        
