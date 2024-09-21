@@ -1,30 +1,32 @@
 from typing import Any
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import CustomUserForm, PostForm, CommentForm
+from .forms import PostForm, CommentForm, CustomUserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout, login
 from django.views.generic import DetailView, ListView, DeleteView, CreateView, UpdateView
-from .models import Post, Comment, Tag
+from .models import Post, Comment
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth import get_user_model
+from django.urls import reverse_lazy
+from django.views import generic
+from django.contrib.auth.models import User
+from rest_framework import generics
 
 def register(request):
     if request.method == 'POST':
         form = CustomUserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('blog/login')  
-    
-    form = CustomUserForm()
-    context = {'form': form}
-    return render(request, 'blog/register.html', context)
+            return redirect('blog/login.html')  
+        
+        form = CustomUserForm()
+        context = {'form': form}
+        return render(request, 'blog/register.html', context_instance = RequestContext(request))
 
-def customlogin(request):
-    # if not request.user.is_authenticated():
-    #     print("User is authenticated. Redirecting User to login page")
-    #     return redirect('blog/base')
-     
+def login(request):     
     if request.method == "POST":
         form = AuthenticationForm(request.POST)
         if form.is_valid():
@@ -34,7 +36,7 @@ def customlogin(request):
             )
             if user is not None:
                 login(request, user)
-                return redirect('blog/base')
+                return redirect('blog/base.html')
             else:
                 for error in list(form.errors.values()):
                     messages.error(request, error)
@@ -46,7 +48,7 @@ def customlogin(request):
 @login_required
 def customlogout(request):
     logout(request)
-    return redirect('blog/base')
+    return redirect('blog/base.html')
 
 def home(request):
     return render(request, 'blog/base.html')
@@ -55,7 +57,13 @@ def home(request):
 def profile(request):
     return render(request, 'blog/profile.html')
 
-class posts(LoginRequiredMixin, ListView):
+def user_profile(request):
+    """Displays information unique to the logged-in user."""
+
+    user = authenticate(username='superuserusername', password='sueruserpassword')
+    login(request, user)
+
+class Post(LoginRequiredMixin, ListView):
     model = Post
     template_name = 'blog/post_list.html'
 
@@ -141,3 +149,8 @@ class SearchResultView(ListView):
             Q(content__icontains=query) |
             Q(tags__name__icontains=query)
         )
+
+class Edit(PermissionRequiredMixin):
+    permission_required = ('posts.can_open', 'posts.can_edit')
+
+    # View

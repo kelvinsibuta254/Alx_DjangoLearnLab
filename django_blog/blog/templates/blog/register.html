@@ -1,16 +1,14 @@
-<!-- register.html -->
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <h1>Register</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Register</button>
-    </form>
-</body>
-</html>
+<form method="POST" action="">
+    {% csrf_token %}
+    <h3>REGISTER HERE - DJANGO BLOG</h3>
+    <h5>{{form.username.label}}</h5>
+    {{form.username}}
+    <h5>{{form.email.label}}</h5>
+    {{form.email}}
+    <h5>{{form.password1.label}}</h5>
+    {{form.password1}}
+    <h5>{{form.password2.label}}</h5>
+    {{form.password2}}
+    <input type="submit" name="Create User">
+</form>
