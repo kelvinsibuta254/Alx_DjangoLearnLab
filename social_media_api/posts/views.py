@@ -71,14 +71,14 @@ class DeleteComment(generics.RetrieveDestroyAPIView):
 class LikeView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)
+    def post(self, request, pk):
+        post = generics.get_object_or_404(Post, id=pk)
         user = request.user
         
         if Like.objects.filter(user=user, post=post).exists():
             return Response({'message': 'You have already liked this post'}, status = status.HTTP_400_BAD_REQUEST)
 
-        Like.objects.create(user=user, post=post)
+        Like.objects.get_or_create(user=request.user, post=post)
 
         if post.author != user:
             Notification.objects.create(
@@ -94,8 +94,8 @@ class LikeView(APIView):
 class UnlikeView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request, post_id):
-        post = get_object_or_404(Post, id=post_id)
+    def post(self, request, pk):
+        post = generics.get_object_or_404(Post, pk=pk)
         user = request.user
 
         like = Like.objects.filter(user=user, post=post).first()
