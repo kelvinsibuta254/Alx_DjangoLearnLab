@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7w5wju(-u$vhb51f8#g!_!z-q1^bnk=j_%d86&%7n3n00rawv^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -141,3 +141,39 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 DEFAULT_PAGINATION_CLASS = 'rest_framework.pagination.PageNumberPagination'
+
+
+#Ensure CSRF cookies are only transmitted over HTTPS
+CSRF_COOKIE_SECURE = True
+
+#Ensure cookies are only transmitted over HTTPS
+SESSION_COOKIE_SECURE = True
+
+#Enable the browser's XSS filtering and help prevent cross-site scripting attacks
+SECURE_BROWSER_XSS_FILTER = True
+
+#Prevents your site from being framed and protect against clickjacking
+X_FRAME_OPTIONS = "DENY"
+
+#Prevent browsers from MIME-sniffing a response away from the declared content-type
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# for more security
+CSRF_COOKIE_SECURE = True
+CSRF_USE_SESSIONS = True
+CSRF_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SAMESITE = 'Strict'
+
+## Redirect all HTTP to HTTPS
+SECURE_SSL_REDIRECT = True 
+
+## Instruct browsers to only access the site via HTTPS for the specified time
+SECURE_HSTS_SECONDS = 31536000
+
+# Include all subdomains in the HSTS policy and to allow preloading
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+# Tells django which header to look for
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTOCOL', 'https')
